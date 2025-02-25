@@ -1,2 +1,42 @@
 #Noir build artifacts
 contracts/under_fi/target/
+
+dapp/node_modules/
+dapp/.pnp
+dapp/.pnp.*
+dapp/.yarn/*
+dapp/!.yarn/patches
+dapp/!.yarn/plugins
+dapp/!.yarn/releases
+dapp/!.yarn/versions
+
+# testing
+dapp/coverage
+
+# next.js
+dapp/.next/
+dapp/out/
+
+# production
+dapp/build
+
+# misc
+dapp/.DS_Store
+dapp/*.pem
+
+# debug
+dapp/npm-debug.log*
+dapp/yarn-debug.log*
+dapp/yarn-error.log*
+dapp/.pnpm-debug.log*
+
+# env files (can opt-in for committing if needed)
+dapp/.env*
+
+# vercel
+dapp/.vercel
+
+# typescript
+dapp/*.tsbuildinfo
+dapp/next-env.d.ts
+
