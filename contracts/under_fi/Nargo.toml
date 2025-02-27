@@ -1,6 +1,7 @@
 [package]
 name = "under_fi"
-type = "bin"
+type = "lib"
 authors = [""]
+version = "0.1.0"
 
 [dependencies]
