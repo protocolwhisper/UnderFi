@@ -1,0 +1,8 @@
+[package]
+name = "under_fi_contract"
+type = "contract"
+authors = [""]
+version = "0.1.0"
+
+[dependencies]
+under_fi = { path = "../under_fi" }

@@ -17,9 +17,9 @@ pub struct ProtocolState {
     pub fee_rate: Field,
 }
 
-mod deposit;
-mod withdraw;
-mod balance;
-mod yield_mod;
-mod fees;
-mod emergency;
+pub mod deposit;
+pub mod withdraw;
+pub mod balance;
+pub mod yield_mod;
+pub mod fees;
+pub mod emergency;
