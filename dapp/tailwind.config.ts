@@ -18,6 +18,25 @@ export default {
         "text-on-primary": "#ffffff",
         accent: "#ff8cbc",
       },
+      fontFamily: {
+        caudex: ['var(--font-caudex)', 'serif'],
+      },
+      keyframes: {
+        shine: {
+          'to': {
+            'background-position': '200% center',
+          },
+        }
+      },
+      animation: {
+        shine: 'shine 4s linear infinite',
+      },
+      backgroundSize: {
+        'auto': 'auto',
+        'cover': 'cover',
+        'contain': 'contain',
+        '200%': '200%',
+      },
     },
   },
   plugins: [],

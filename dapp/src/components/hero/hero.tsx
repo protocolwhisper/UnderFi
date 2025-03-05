@@ -29,10 +29,10 @@ const Hero = () => {
           Undercollateralized loans using zero-knowledge email verification, built on Aztec's zkVM
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <button className="bg-primary hover:bg-primary-dark text-white font-medium px-8 py-3 rounded-lg transition duration-300 shadow-lg">
+          <button className="bg-primary hover:bg-primary-dark text-white font-medium px-8 py-3 rounded-lg transition duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5">
             Request a Loan
           </button>
-          <button className="bg-white/20 backdrop-blur-sm border-2 border-primary text-primary hover:bg-white/30 font-medium px-8 py-3 rounded-lg transition duration-300 shadow-lg">
+          <button className="bg-white/20 backdrop-blur-sm border-2 border-primary text-primary hover:bg-white/30 font-medium px-8 py-3 rounded-lg transition duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5">
             Verify Email
           </button>
         </div>
