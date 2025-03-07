@@ -26,7 +26,7 @@ const Hero = () => {
           Privacy-Preserving Lending Protocol
         </h2>
         <p className="text-base md:text-xl mb-10 text-slate-700 drop-shadow-lg">
-          Undercollateralized loans using zero-knowledge email verification, built on Aztec's zkVM
+          Undercollateralized loans using zero-knowledge email verification, built on Aztec&apos;s zkVM
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <button className="bg-primary hover:bg-primary-dark text-white font-medium px-8 py-3 rounded-lg transition duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5">
