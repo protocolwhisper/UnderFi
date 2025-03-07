@@ -17,5 +17,4 @@ Public verification of credentials + private loan
 (TBD) Account-abstracted recurring payments
 
 
-## Frontend preview 
-[![Screenshot 2025-03-05 at 1 48 12 AM](https://github.com/user-attachments/assets/505b175d-e3b8-466a-a6ce-4b0eced0c4b3)](https://www.youtube.com/watch?v=iZu8Fu0atkA)
+
