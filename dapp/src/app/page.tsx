@@ -1,15 +1,11 @@
 import HomeComponent from '@/components/home/home-component';
-import React from 'react';
+import GridShowcase from '@/components/home/grid-showcase';
 
-
-const Home: React.FC = () => {
-
-
+export default function Home() {
   return (
-    <>
-    <HomeComponent />
-    </>
+    <main>
+      <HomeComponent />
+      <GridShowcase />
+    </main>
   );
-};
-
-export default Home;
+}
