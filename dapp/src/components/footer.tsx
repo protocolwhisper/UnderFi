@@ -1,54 +1,84 @@
-import { Shield } from 'lucide-react'
-import React from 'react'
+import React from "react";
+import Link from "next/link";
 
-function Footer() {
+const Footer = () => {
   return (
-        <footer className="bg-slate-800 text-white py-12">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
-            <div>
-              <div className="flex items-center font-bold text-2xl text-white mb-6">
-                <Shield className="mr-2" />
-                Underfi
-              </div>
-              <p className="text-slate-400">
-                A privacy-preserving lending protocol that enables undercollateralized loans using zero-knowledge email verification.
-              </p>
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold mb-6">Products</h3>
-              <ul className="space-y-3">
-                <li><a href="#" className="text-slate-400 hover:text-white transition">Loans</a></li>
-                <li><a href="#" className="text-slate-400 hover:text-white transition">Verification</a></li>
-                <li><a href="#" className="text-slate-400 hover:text-white transition">Privacy Tools</a></li>
-                <li><a href="#" className="text-slate-400 hover:text-white transition">API</a></li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold mb-6">Resources</h3>
-              <ul className="space-y-3">
-                <li><a href="#" className="text-slate-400 hover:text-white transition">Documentation</a></li>
-                <li><a href="#" className="text-slate-400 hover:text-white transition">Guides</a></li>
-                <li><a href="#" className="text-slate-400 hover:text-white transition">Blog</a></li>
-                <li><a href="#" className="text-slate-400 hover:text-white transition">FAQ</a></li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold mb-6">Company</h3>
-              <ul className="space-y-3">
-                <li><a href="#" className="text-slate-400 hover:text-white transition">About</a></li>
-                <li><a href="#" className="text-slate-400 hover:text-white transition">Careers</a></li>
-                <li><a href="#" className="text-slate-400 hover:text-white transition">Privacy Policy</a></li>
-                <li><a href="#" className="text-slate-400 hover:text-white transition">Terms of Service</a></li>
-              </ul>
-            </div>
+    <footer className="bg-gray-900 text-gray-300 py-12">
+      <div className="container mx-auto px-4">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div>
+            <h3 className="text-xl font-bold mb-4 text-indigo-400">UnderFi</h3>
+            <p className="text-gray-400">
+              Private DeFi lending powered by zero-knowledge proofs.
+            </p>
           </div>
-          <div className="pt-8 border-t border-slate-700 text-center text-slate-400 text-sm">
-            <p>&copy; {new Date().getFullYear()} Underfi. All rights reserved.</p>
+          <div>
+            <h4 className="text-lg font-semibold mb-4 text-white">Resources</h4>
+            <ul className="space-y-2">
+              <li>
+                <Link href="#docs" className="hover:text-indigo-400 transition-colors">
+                  Documentation
+                </Link>
+              </li>
+              <li>
+                <Link href="#whitepaper" className="hover:text-indigo-400 transition-colors">
+                  Whitepaper
+                </Link>
+              </li>
+              <li>
+                <Link href="#api" className="hover:text-indigo-400 transition-colors">
+                  API Reference
+                </Link>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="text-lg font-semibold mb-4 text-white">Company</h4>
+            <ul className="space-y-2">
+              <li>
+                <Link href="#about" className="hover:text-indigo-400 transition-colors">
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link href="#careers" className="hover:text-indigo-400 transition-colors">
+                  Careers
+                </Link>
+              </li>
+              <li>
+                <Link href="#contact" className="hover:text-indigo-400 transition-colors">
+                  Contact
+                </Link>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="text-lg font-semibold mb-4 text-white">Connect</h4>
+            <ul className="space-y-2">
+              <li>
+                <Link href="https://twitter.com/underfi" className="hover:text-indigo-400 transition-colors">
+                  Twitter
+                </Link>
+              </li>
+              <li>
+                <Link href="https://discord.gg/underfi" className="hover:text-indigo-400 transition-colors">
+                  Discord
+                </Link>
+              </li>
+              <li>
+                <Link href="https://github.com/underfi" className="hover:text-indigo-400 transition-colors">
+                  GitHub
+                </Link>
+              </li>
+            </ul>
           </div>
         </div>
-      </footer>
-  )
-}
+        <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+          <p>© {new Date().getFullYear()} UnderFi. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+  );
+};
 
-export default Footer
+export default Footer;

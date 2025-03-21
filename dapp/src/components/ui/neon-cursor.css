@@ -1,0 +1,57 @@
+.neon-cursor-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  overflow: hidden;
+}
+
+.cursor-main {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  background-color: rgba(129, 140, 248, 0.8);
+  border-radius: 50%;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  box-shadow: 0 0 10px rgba(129, 140, 248, 0.8);
+  transform-origin: center;
+  will-change: transform;
+}
+
+.cursor-trail {
+  position: fixed;
+  width: 40px;
+  height: 40px;
+  border: 2px solid rgb(99, 102, 241);
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0.6;
+  will-change: transform;
+  transform-origin: center;
+}
+
+.cursor-glow {
+  position: fixed;
+  width: 60px;
+  height: 60px;
+  background: radial-gradient(
+    circle,
+    rgba(129, 140, 248, 0.4) 0%,
+    rgba(129, 140, 248, 0) 70%
+  );
+  border-radius: 50%;
+  pointer-events: none;
+  transform-origin: center;
+  will-change: transform;
+}
+
+/* Hide cursor on mobile devices */
+@media (max-width: 768px) {
+  .neon-cursor-container {
+    display: none;
+  }
+} 

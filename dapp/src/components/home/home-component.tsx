@@ -1,21 +1,26 @@
 "use client"
 import React, { FC } from 'react'
-import { motion, Variants } from 'framer-motion'
 import Hero from '../hero/hero'
 import PlatformStats from './platform-stats'
+import GridShowcase from './grid-showcase'
 import PrivacyFeatures from './privacy-features'
+import { Fragment } from 'react'
 
 const HomeComponent: FC = () => {
   return (
-    <div className="min-h-screen">
+    <Fragment>
+      {/* Hero/Cube Animation First */}
       <Hero />
       
-      {/* Replace the old Privacy-First DeFi section with the new component */}
-      <PrivacyFeatures />
+      {/* Grid Showcase */}
+      <GridShowcase />
       
-      {/* Platform Stats Section */}
+      {/* Platform Stats */}
       <PlatformStats />
-    </div>
+      
+      {/* Privacy Features */}
+      <PrivacyFeatures />
+    </Fragment>
   )
 }
 

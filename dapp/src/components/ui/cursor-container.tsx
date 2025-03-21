@@ -1,7 +1,7 @@
 'use client'
 
 import React, { ReactNode } from 'react'
-import CanvasCursor from './canvas-cursor'
+import NeonCursor from './neon-cursor'
 
 interface CursorContainerProps {
   children: ReactNode
@@ -15,8 +15,10 @@ export default function CursorContainer({ children }: CursorContainerProps) {
           cursor: none !important;
         }
         
-        a, button, [role="button"] {
+        /* Fix for header elements */
+        header, nav, .navbar, a, button, [role="button"] {
           cursor: none !important;
+          pointer-events: auto !important;
         }
         
         /* Only show default cursor on mobile devices */
@@ -24,13 +26,9 @@ export default function CursorContainer({ children }: CursorContainerProps) {
           * {
             cursor: auto !important;
           }
-          
-          #canvas {
-            display: none !important;
-          }
         }
       `}</style>
-      <CanvasCursor />
+      <NeonCursor />
       {children}
     </div>
   )
