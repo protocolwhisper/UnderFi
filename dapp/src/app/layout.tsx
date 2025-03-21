@@ -4,6 +4,7 @@ import { Caudex } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
+import CursorContainer from "@/components/ui/cursor-container";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,9 +38,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${caudex.variable} font-caudex antialiased max-w-6xl  bg-gradient-to-r from-blue-50 to-indigo-100 mx-auto`}
       >
-        <Navbar />
-        {children}
-        <Footer />
+        <CursorContainer>
+          <Navbar />
+          {children}
+          <Footer />
+        </CursorContainer>
       </body>
     </html>
   );
