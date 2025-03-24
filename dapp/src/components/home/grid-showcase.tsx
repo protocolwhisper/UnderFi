@@ -53,12 +53,15 @@ const GridShowcase = () => {
         className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl p-6 flex items-center justify-center relative min-h-[500px]"
       >
         <Image
-          src="/images/app-mockup.png" // You'll need to add this image
+          src="/underfi.png" 
           alt="UnderFi App Interface"
-          width={300}
-          height={600}
-          className="z-10 drop-shadow-2xl rounded-3xl"
+          width={200}
+          height={200}
+          className="z-10 drop-shadow-2xl rounded-3xl mt-[-100px]"
         />
+        
+        
+        
         <div className="absolute inset-0 overflow-hidden rounded-xl">
           <div className="absolute -bottom-10 -right-10 w-64 h-64 bg-purple-600 opacity-20 rounded-full blur-3xl"></div>
           <div className="absolute top-20 -left-10 w-40 h-40 bg-indigo-500 opacity-20 rounded-full blur-3xl"></div>

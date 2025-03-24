@@ -5,6 +5,15 @@ const Footer = () => {
   return (
     <footer className="bg-gray-900 text-gray-300 py-12">
       <div className="container mx-auto px-4">
+        {/* Decorative divider - moved to top */}
+        <div className="relative">
+          <div className="border-t border-gray-800 mb-12">
+            <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+              <div className="bg-purple-500 w-3 h-3 rounded-full shadow-lg shadow-purple-500/50"></div>
+            </div>
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
             <h3 className="text-xl font-bold mb-4 text-indigo-400">UnderFi</h3>
@@ -73,7 +82,15 @@ const Footer = () => {
             </ul>
           </div>
         </div>
-        <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+        {/* Decorative divider */}
+        <div className="relative">
+          <div className="border-t border-gray-800 my-8">
+            <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+              <div className="bg-purple-500 w-3 h-3 rounded-full shadow-lg shadow-purple-500/50"></div>
+            </div>
+          </div>
+        </div>
+        <div className="text-center text-gray-400">
           <p>© {new Date().getFullYear()} UnderFi. All rights reserved.</p>
         </div>
       </div>

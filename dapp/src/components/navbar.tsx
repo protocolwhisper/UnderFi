@@ -18,7 +18,7 @@ function Navbar() {
                     <div className="flex items-center">
                         <Link href="/" className="flex items-center">
                             <Image
-                                src="/logo.svg"
+                                src="/underfi.png"
                                 alt="UnderFi Logo"
                                 width={40}
                                 height={40}
