@@ -4,8 +4,15 @@ import { useState, useEffect, useCallback } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import './neon-cursor.css';
 
+interface CursorPosition {
+  x: number;
+  y: number;
+  scale: number;
+  opacity: number;
+}
+
 const NeonCursor = () => {
-  const [position, setPosition] = useState({
+  const [position, setPosition] = useState<CursorPosition>({
     x: 0,
     y: 0,
     scale: 1,
@@ -16,7 +23,7 @@ const NeonCursor = () => {
   const trailControls = useAnimation();
   const glowControls = useAnimation();
 
-  const handleMouseMove = useCallback((e) => {
+  const handleMouseMove = useCallback((e: MouseEvent) => {
     setPosition((prev) => ({
       ...prev,
       x: e.clientX,
@@ -28,8 +35,8 @@ const NeonCursor = () => {
   const handleMouseUp = () => setIsClicking(false);
 
   const handleMouseOver = useCallback(
-    (e) => {
-      const target = e.target;
+    (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
       if (target.matches('a, button, input, [data-hover="true"]')) {
         setIsHovering(true);
         void trailControls.start({
