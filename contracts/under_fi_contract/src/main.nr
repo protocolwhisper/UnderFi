@@ -1,107 +1,222 @@
-use dep::std;
-use under_fi::core::{Asset, UserBalance, ProtocolState};
-use under_fi::core::deposit::deposit;
-use under_fi::core::withdraw::withdraw;
-use under_fi::core::balance::update_balance;
-use under_fi::core::emergency::toggle_pause;
-use under_fi::core::yield_mod::calculate_yield;
+mod test;
+// docs:start:setup
+use dep::aztec::macros::aztec;
 
-// Global state storage
-struct GlobalState {
-    protocol: ProtocolState,
-    assets: [Asset; 10], // Array to store supported assets
-    user_balances: [UserBalance; 1000], // Array to store user balances
-    asset_count: Field,
-    balance_count: Field,
-}
+#[aztec]
+pub contract Counter {
+    // docs:end:setup
+    // docs:start:imports
+    use aztec::macros::{functions::{initializer, private}, storage::storage};
+    use aztec::prelude::{AztecAddress, Map};
+    use aztec::protocol_types::traits::{FromField, ToField};
+    use easy_private_state::EasyPrivateUint;
+    use value_note::{balance_utils, value_note::ValueNote};
+    // docs:end:imports
 
-// Initialize global state
-fn init_state() -> GlobalState {
-    GlobalState {
-        protocol: ProtocolState {
-            paused: 0,
-            admin: 1, // Set initial admin
-            fee_rate: 30, // 0.3% fee
-        },
-        assets: [Asset { 
-            asset_id: 0, 
-            balance: 0, 
-            yield_rate: 0 
-        }; 10],
-        user_balances: [UserBalance {
-            user: 0,
-            asset: 0,
-            amount: 0,
-            last_update: 0
-        }; 1000],
-        asset_count: 0,
-        balance_count: 0,
+    // docs:start:storage_struct
+    #[storage]
+    struct Storage<Context> {
+        counters: Map<AztecAddress, EasyPrivateUint<Context>, Context>,
+    }
+    // docs:end:storage_struct
+
+    // docs:start:constructor
+    #[initializer]
+    #[private]
+    // We can name our initializer anything we want as long as it's marked as aztec(initializer)
+    fn initialize(headstart: u64, owner: AztecAddress) {
+        let counters = storage.counters;
+        counters.at(owner).add(headstart, owner, context.msg_sender());
+    }
+    // docs:end:constructor
+
+    // docs:start:increment
+    #[private]
+    fn increment(owner: AztecAddress, sender: AztecAddress) {
+        unsafe {
+            dep::aztec::oracle::debug_log::debug_log_format(
+                "Incrementing counter for owner {0}",
+                [owner.to_field()],
+            );
+        }
+        let counters = storage.counters;
+        counters.at(owner).add(1, owner, sender);
+    }
+    // docs:end:increment
+
+    #[private]
+    fn increment_twice(owner: AztecAddress, sender: AztecAddress) {
+        unsafe {
+            dep::aztec::oracle::debug_log::debug_log_format(
+                "Incrementing counter twice for owner {0}",
+                [owner.to_field()],
+            );
+        }
+        let counters = storage.counters;
+        counters.at(owner).add(1, owner, sender);
+        counters.at(owner).add(1, owner, sender);
+    }
+
+    #[private]
+    fn increment_and_decrement(owner: AztecAddress, sender: AztecAddress) {
+        unsafe {
+            dep::aztec::oracle::debug_log::debug_log_format(
+                "Incrementing and decrementing counter for owner {0}",
+                [owner.to_field()],
+            );
+        }
+        let counters = storage.counters;
+        counters.at(owner).add(1, owner, sender);
+        counters.at(owner).sub(1, owner, sender);
+    }
+
+    #[private]
+    fn decrement(owner: AztecAddress, sender: AztecAddress) {
+        unsafe {
+            dep::aztec::oracle::debug_log::debug_log_format(
+                "Decrementing counter for owner {0}",
+                [owner.to_field()],
+            );
+        }
+        let counters = storage.counters;
+        counters.at(owner).sub(1, owner, sender);
+    }
+
+    // docs:start:get_counter
+    unconstrained fn get_counter(owner: AztecAddress) -> pub Field {
+        let counters = storage.counters;
+        balance_utils::get_balance(counters.at(owner).set)
+    }
+
+    // docs:end:get_counter
+    // docs:start:test_imports
+    use crate::test;
+    use dep::aztec::note::note_getter::{MAX_NOTES_PER_PAGE, view_notes};
+    use dep::aztec::note::note_viewer_options::NoteViewerOptions;
+    use dep::aztec::protocol_types::storage::map::derive_storage_slot_in_map;
+    use dep::aztec::test::helpers::test_environment::TestEnvironment;
+
+    // docs:end:test_imports
+    // docs:start:txe_test_increment
+    #[test]
+    unconstrained fn test_increment() {
+        // Setup env, generate keys
+        let mut env = TestEnvironment::new();
+        let owner = env.create_account(1);
+        let sender = env.create_account(2);
+        let initial_value: Field = 5;
+        env.impersonate(owner);
+        // Deploy contract and initialize
+        let initializer = Counter::interface().initialize(initial_value as u64, owner);
+        let counter_contract = env.deploy_self("Counter").with_private_initializer(initializer);
+        let contract_address = counter_contract.to_address();
+        // docs:start:txe_test_read_notes
+        // Read the stored value in the note
+        env.impersonate(contract_address);
+        let counter_slot = Counter::storage_layout().counters.slot;
+        let owner_storage_slot = derive_storage_slot_in_map(counter_slot, owner);
+        let mut options = NoteViewerOptions::new();
+        let notes: BoundedVec<ValueNote, MAX_NOTES_PER_PAGE> =
+            view_notes(owner_storage_slot, options);
+        let initial_note_value = notes.get(0).value;
+        assert(
+            initial_note_value == initial_value,
+            f"Expected {initial_value} but got {initial_note_value}",
+        );
+        // docs:end:txe_test_read_notes
+        // Increment the counter
+        Counter::at(contract_address).increment(owner, sender).call(&mut env.private());
+        // get_counter is an unconstrained function, so we call it directly (we're in the same module)
+        let current_value_for_owner = get_counter(owner);
+        let expected_current_value = initial_value + 1;
+        assert(
+            expected_current_value == current_value_for_owner,
+            f"Expected {expected_current_value} but got {current_value_for_owner}",
+        );
+    }
+    // docs:end:txe_test_increment
+
+    // TODO(#13221): I had to comment out all the env.advance_block_by(1) and sync_notes() calls because that triggered
+    // an issue with how state is committed. The calls to advance_block_by(1) seems to have always been unnecessary
+    // in this test but anyway we should fix the issue and try to get the block advancing working here.
+    #[test]
+    unconstrained fn extended_incrementing_and_decrementing() {
+        let initial_value = 5;
+        let (env, contract_address, owner, sender) = test::setup(initial_value);
+
+        // Checking from the note cache
+        env.impersonate(contract_address);
+        let counter_slot = Counter::storage_layout().counters.slot;
+        let owner_storage_slot = derive_storage_slot_in_map(counter_slot, owner);
+        let mut options = NoteViewerOptions::new();
+        let notes: BoundedVec<ValueNote, MAX_NOTES_PER_PAGE> =
+            view_notes(owner_storage_slot, options);
+        let initial_note_value = notes.get(0).value;
+        assert(
+            initial_note_value == initial_value,
+            f"Expected {initial_value} but got {initial_note_value}",
+        );
+
+        // Checking that the note was discovered from private logs
+        // env.advance_block_by(1);
+        sync_notes();
+        env.impersonate(contract_address);
+        let counter_slot = Counter::storage_layout().counters.slot;
+        let owner_storage_slot = derive_storage_slot_in_map(counter_slot, owner);
+        let mut options = NoteViewerOptions::new();
+        let notes: BoundedVec<ValueNote, MAX_NOTES_PER_PAGE> =
+            view_notes(owner_storage_slot, options);
+        let initial_note_value = notes.get(0).value;
+        assert(
+            initial_note_value == initial_value,
+            f"Expected {initial_value} but got {initial_note_value}",
+        );
+
+        Counter::at(contract_address).increment_twice(owner, sender).call(&mut env.private());
+
+        // Checking from the note cache
+        let notes: BoundedVec<ValueNote, MAX_NOTES_PER_PAGE> =
+            view_notes(owner_storage_slot, options);
+        assert(notes.len() == 3);
+        assert(get_counter(owner) == 7);
+
+        // Checking that the note was discovered from private logs
+        // env.advance_block_by(1);
+        sync_notes();
+        let notes: BoundedVec<ValueNote, MAX_NOTES_PER_PAGE> =
+            view_notes(owner_storage_slot, options);
+        assert(get_counter(owner) == 7);
+        assert(notes.len() == 3);
+
+        // Checking from the note cache
+        Counter::at(contract_address).increment_and_decrement(owner, sender).call(&mut env.private());
+        let notes: BoundedVec<ValueNote, MAX_NOTES_PER_PAGE> =
+            view_notes(owner_storage_slot, options);
+        assert(get_counter(owner) == 7);
+        // We have a change note of 0
+        assert(notes.len() == 4);
+
+        // Checking that the note was discovered from private logs
+        // env.advance_block_by(1);
+        sync_notes();
+        let notes: BoundedVec<ValueNote, MAX_NOTES_PER_PAGE> =
+            view_notes(owner_storage_slot, options);
+        assert(notes.len() == 4);
+        assert(get_counter(owner) == 7);
+
+        // Checking from the note cache
+        Counter::at(contract_address).decrement(owner, sender).call(&mut env.private());
+        let notes: BoundedVec<ValueNote, MAX_NOTES_PER_PAGE> =
+            view_notes(owner_storage_slot, options);
+        assert(get_counter(owner) == 6);
+        assert(notes.len() == 4);
+
+        // Checking that the note was discovered from private logs
+        // env.advance_block_by(1);
+        sync_notes();
+        let notes: BoundedVec<ValueNote, MAX_NOTES_PER_PAGE> =
+            view_notes(owner_storage_slot, options);
+        assert(get_counter(owner) == 6);
+        assert(notes.len() == 4);
     }
 }
-
-// Main contract entry point
-fn main(
-    user: Field, 
-    asset: Field, 
-    amount: Field, 
-    action: Field,
-    current_time: Field
-) -> pub GlobalState {
-    let state = init_state();
-    
-    if action == 0 {
-        // Deposit
-        let new_balance = deposit(user, asset, amount, state.protocol, current_time);
-        
-        let mut new_state = state;
-        new_state.user_balances[state.balance_count] = new_balance;
-        new_state.balance_count += 1;
-        
-        new_state
-    } else if action == 1 {
-        // Withdraw
-        // For simplicity, just return the state
-        // In a real implementation, you would find the user balance and update it
-        state
-    } else if action == 2 {
-        // Toggle pause
-        let mut new_state = state;
-        new_state.protocol = toggle_pause(user, state.protocol);
-        new_state
-    } else {
-        // Default action: return unchanged state
-        state
-    }
-}
-
-#[test]
-fn test_deposit() {
-    // Initialize with action = 0 (deposit)
-    let user_id = 123;
-    let asset_id = 1;
-    let amount = 1000;
-    let action = 0;
-    let current_time = 1000;
-    
-    // Call main function with deposit action
-    let state = main(user_id, asset_id, amount, action, current_time);
-    
-    // Verify deposit was processed
-    assert(state.balance_count == 1);
-    assert(state.user_balances[0].user == user_id);
-    assert(state.user_balances[0].asset == asset_id);
-    assert(state.user_balances[0].amount == 997); // 1000 - 0.3% fee
-}
-
-#[test]
-fn test_toggle_pause() {
-    // Call main with admin user and toggle pause action
-    let admin = 1;
-    let action = 2;
-    
-    // Toggle pause
-    let state = main(admin, 0, 0, action, 0);
-    
-    // Verify protocol is now paused
-    assert(state.protocol.paused == 1);
-} 

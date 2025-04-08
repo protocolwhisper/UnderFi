@@ -1,0 +1,35 @@
+Raw JWT
+
+eyJhbGciOiJSUzI1NiIsImtpZCI6IjkxNGZiOWIwODcxODBiYzAzMDMyODQ1MDBjNWY1NDBjNmQ0ZjVlMmYiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIzOTcyMzQ4MDc3OTQtZmg2bWhsMGpwcGd0dDBhazVjZ2lraGxlc2JlOGY3c2kuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiIzOTcyMzQ4MDc3OTQtZmg2bWhsMGpwcGd0dDBhazVjZ2lraGxlc2JlOGY3c2kuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMTM3ODE3OTg3MTYzMzY5ODUxNjMiLCJlbWFpbCI6InByb3RvY29sLmV0aEBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibm9uY2UiOiJ1bmQiLCJuYmYiOjE3NDE4MjUwMTksIm5hbWUiOiJDaHJpcyBNIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FDZzhvY0tkR0Faa3NnM3NZUW5PU2FJZFJsRExxUGZ0SlZvZ1VrVllWdDVfLUN1OWZfUTZMS3c9czk2LWMiLCJnaXZlbl9uYW1lIjoiQ2hyaXMiLCJmYW1pbHlfbmFtZSI6Ik0iLCJpYXQiOjE3NDE4MjUzMTksImV4cCI6MTc0MTgyODkxOSwianRpIjoiYjJmMTE4NGFiMzUwNDE4YjUwMWFlNDJkYWYzNzYyMTM3YzkzM2M5MCJ9.v9a-RGp3vh7_HGMQgP0pZGQEyJeu6lQVFXapHTySSYw8LZNBwXok_jYQQagUuUOfpdqkne7dEMC7S59OmRojPlZTjnfT7xubJt3rJChF-k2ssC6WkNChIqgXdkryqKusT24e7p86t6caVTTYcdTVHSZVMBjETOLRBavXNuxd_p7G7AEvYMjAK4gDiIVZX9Axf3YyUS-MfQmIie0MjuMy-t4JDJc36ktcdYuaDBDO_yQzmrLMpncgftJAuYP4zj9aIZxmyQoNARc8NZSwKUE0lJmfr2zirw47k9lwXl3cjgDU7kOJYxCnQyK7wjIkgjblrsSz2c04UNSeGNq0XdIVTA
+
+Header
+
+{
+  "alg": "RS256",
+  "kid": "914fb9b087180bc0303284500c5f540c6d4f5e2f",
+  "typ": "JWT"
+}
+
+Payload
+
+{
+  "iss": "https://accounts.google.com",
+  "azp": "397234807794-fh6mhl0jppgtt0ak5cgikhlesbe8f7si.apps.googleusercontent.com",
+  "aud": "397234807794-fh6mhl0jppgtt0ak5cgikhlesbe8f7si.apps.googleusercontent.com",
+  "sub": "113781798716336985163",
+  "email": "protocol.eth@gmail.com",
+  "email_verified": true,
+  "nonce": "und",
+  "nbf": 1741825019,
+  "name": "Chris M",
+  "picture": "https://lh3.googleusercontent.com/a/ACg8ocKdGAZksg3sYQnOSaIdRlDLqPftJVogUkVYVt5_-Cu9f_Q6LKw=s96-c",
+  "given_name": "Chris",
+  "family_name": "M",
+  "iat": 1741825319,
+  "exp": 1741828919,
+  "jti": "b2f1184ab350418b501ae42daf3762137c933c90"
+}
+
+Signature
+
+v9a-RGp3vh7_HGMQgP0pZGQEyJeu6lQVFXapHTySSYw8LZNBwXok_jYQQagUuUOfpdqkne7dEMC7S59OmRojPlZTjnfT7xubJt3rJChF-k2ssC6WkNChIqgXdkryqKusT24e7p86t6caVTTYcdTVHSZVMBjETOLRBavXNuxd_p7G7AEvYMjAK4gDiIVZX9Axf3YyUS-MfQmIie0MjuMy-t4JDJc36ktcdYuaDBDO_yQzmrLMpncgftJAuYP4zj9aIZxmyQoNARc8NZSwKUE0lJmfr2zirw47k9lwXl3cjgDU7kOJYxCnQyK7wjIkgjblrsSz2c04UNSeGNq0XdIVTA
