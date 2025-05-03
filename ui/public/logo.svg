@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="64" height="64" viewBox="0 0 64 64"
+     xmlns="http://www.w3.org/2000/svg"
+     role="img" aria-label="UnderFi logo (icon only)">
+  <!-- Gradient: deep violet → bright magenta -->
+  <defs>
+    <linearGradient id="ufGradient" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%"  stop-color="#9B5DE5"/>
+      <stop offset="100%" stop-color="#F15BB5"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Logo mark background -->
+  <rect x="0" y="0" width="64" height="64" rx="12" fill="url(#ufGradient)"/>
+
+  <!-- Stylised U → arrow -->
+  <path d="M20 16
+           v18
+           a12 12 0 0 0 24 0
+           V16
+           h-8
+           v18
+           a4 4 0 0 1 -8 0
+           V16
+           Z
+           M32 48
+           l-6 -8
+           h12
+           Z"
+        fill="#fff"/>
+</svg>

@@ -1,0 +1,181 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Dark theme colors */
+    --background: 0 0% 7%;
+    --foreground: 0 0% 95%;
+
+    --card: 0 0% 10%;
+    --card-foreground: 0 0% 95%;
+
+    --popover: 0 0% 9%;
+    --popover-foreground: 0 0% 95%;
+
+    --primary: 265 89% 66%;
+    --primary-foreground: 0 0% 100%;
+    --primary-rgb: 139, 92, 246; /* RGB value for the primary color - purple */
+
+    --secondary: 0 0% 15%;
+    --secondary-foreground: 0 0% 90%;
+
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 60%;
+
+    --accent: 265 89% 66%;
+    --accent-foreground: 0 0% 12%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 95%;
+
+    --border: 0 0% 18%;
+    --input: 0 0% 15%;
+    --ring: 265 89% 66%;
+
+    --chart-1: 265 89% 66%;
+    --chart-2: 214 93% 73%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+
+    /* Dream Purple color scale */
+    --color-purple-50: #f5f3ff;
+    --color-purple-100: #ede9fe;
+    --color-purple-200: #ddd6fe;
+    --color-purple-300: #c4b5fd;
+    --color-purple-400: #a78bfa;
+    --color-purple-500: #8b5cf6;
+    --color-purple-600: #7c3aed;
+    --color-purple-700: #6d28d9;
+    --color-purple-800: #5b21b6;
+    --color-purple-900: #4c1d95;
+    --color-purple-950: #2e1065;
+
+    --radius: 0.5rem;
+    --positive: 142 76% 36%;
+    --negative: 0 84% 60%;
+  }
+
+  /* Keeping light theme option for flexibility */
+  .light {
+    --background: 0 0% 100%;
+    --foreground: 224 71.4% 4.1%;
+    --card: 0 0% 100%;
+    --card-foreground: 224 71.4% 4.1%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 224 71.4% 4.1%;
+    --primary: 265 89% 66%;
+    --primary-foreground: 0 0% 100%;
+    --primary-rgb: 139, 92, 246; /* RGB value for the primary color - purple */
+    --secondary: 220 14.3% 95.9%;
+    --secondary-foreground: 220.9 39.3% 11%;
+    --muted: 220 14.3% 95.9%;
+    --muted-foreground: 220 8.9% 46.1%;
+    --accent: 265 89% 66%;
+    --accent-foreground: 0 0% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 20% 98%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 265 89% 66%;
+    --chart-1: 265 89% 66%;
+    --chart-2: 213 76% 56%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+  }
+}
+
+@layer base {
+  html {
+    scrollbar-gutter: stable;
+    overflow-y: scroll;
+    width: 100%;
+  }
+  
+  body.dialog-open {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    padding-right: var(--scrollbar-width, 0px);
+  }
+  
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    width: 100%;
+  }
+
+  /* Modern trading dashboard styles */
+  .trading-card {
+    @apply bg-card border border-border rounded-lg p-4 shadow-md relative overflow-hidden;
+  }
+
+  .card-gradient {
+    @apply relative overflow-hidden;
+  }
+  
+  .card-gradient::after {
+    content: '';
+    @apply absolute pointer-events-none top-0 left-0 right-0 h-1;
+    background: linear-gradient(90deg, transparent, hsl(var(--primary)), transparent);
+  }
+
+  .stats-value {
+    @apply text-2xl md:text-3xl font-semibold;
+  }
+
+  .stats-label {
+    @apply text-xs text-muted-foreground;
+  }
+
+  .positive-change {
+    @apply text-[hsl(var(--positive))] flex items-center;
+  }
+
+  .negative-change {
+    @apply text-[hsl(var(--negative))] flex items-center;
+  }
+
+  .dashboard-card {
+    @apply bg-card border border-border rounded-xl p-4 shadow-md;
+  }
+
+  .dashboard-sidebar {
+    @apply bg-card border-r border-border;
+  }
+
+  .dashboard-nav-item {
+    @apply flex items-center gap-2 px-4 py-3 text-muted-foreground hover:text-foreground hover:bg-secondary rounded-lg transition-colors;
+  }
+
+  .dashboard-nav-item.active {
+    @apply text-foreground bg-secondary;
+  }
+
+  .subtle-glow {
+    text-shadow: 
+      0 0 10px rgba(var(--primary-rgb), 0.6),
+      0 0 20px rgba(var(--primary-rgb), 0.3);
+    transition: text-shadow 0.3s ease;
+  }
+  
+  .subtle-glow:hover {
+    text-shadow: 
+      0 0 15px rgba(var(--primary-rgb), 0.8),
+      0 0 25px rgba(var(--primary-rgb), 0.5);
+  }
+  
+  .info-button {
+    transition: all 0.3s ease;
+  }
+  
+  .info-button:hover {
+    filter: drop-shadow(0 0 8px rgba(var(--primary-rgb), 0.7)) 
+           drop-shadow(0 0 16px rgba(var(--primary-rgb), 0.4));
+  }
+}
