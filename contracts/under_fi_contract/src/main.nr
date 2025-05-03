@@ -136,9 +136,6 @@ pub contract Counter {
     }
     // docs:end:txe_test_increment
 
-    // TODO(#13221): I had to comment out all the env.advance_block_by(1) and sync_notes() calls because that triggered
-    // an issue with how state is committed. The calls to advance_block_by(1) seems to have always been unnecessary
-    // in this test but anyway we should fix the issue and try to get the block advancing working here.
     #[test]
     unconstrained fn extended_incrementing_and_decrementing() {
         let initial_value = 5;
@@ -158,7 +155,7 @@ pub contract Counter {
         );
 
         // Checking that the note was discovered from private logs
-        // env.advance_block_by(1);
+        env.advance_block_by(1);
         sync_notes();
         env.impersonate(contract_address);
         let counter_slot = Counter::storage_layout().counters.slot;
@@ -181,7 +178,7 @@ pub contract Counter {
         assert(get_counter(owner) == 7);
 
         // Checking that the note was discovered from private logs
-        // env.advance_block_by(1);
+        env.advance_block_by(1);
         sync_notes();
         let notes: BoundedVec<ValueNote, MAX_NOTES_PER_PAGE> =
             view_notes(owner_storage_slot, options);
@@ -197,7 +194,7 @@ pub contract Counter {
         assert(notes.len() == 4);
 
         // Checking that the note was discovered from private logs
-        // env.advance_block_by(1);
+        env.advance_block_by(1);
         sync_notes();
         let notes: BoundedVec<ValueNote, MAX_NOTES_PER_PAGE> =
             view_notes(owner_storage_slot, options);
@@ -212,7 +209,7 @@ pub contract Counter {
         assert(notes.len() == 4);
 
         // Checking that the note was discovered from private logs
-        // env.advance_block_by(1);
+        env.advance_block_by(1);
         sync_notes();
         let notes: BoundedVec<ValueNote, MAX_NOTES_PER_PAGE> =
             view_notes(owner_storage_slot, options);
