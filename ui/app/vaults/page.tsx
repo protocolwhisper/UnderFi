@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useAccount } from "wagmi";
 import DashboardLayout from "@/components/dashboard-layout";
 import { Shield, Info, AlertTriangle, Loader2 } from "lucide-react";
@@ -58,7 +58,7 @@ export default function VaultsPage() {
 
 
   // Fetch max borrow amount and user assets when connected
-  const fetchUserData = async () => {
+  const fetchUserData = useCallback(async () => {
     if (!isConnected) return;
     
     setIsLoadingData(true);
@@ -79,14 +79,11 @@ export default function VaultsPage() {
     } finally {
       setIsLoadingData(false);
     }
-  };
+  }, [isConnected, getMaxBorrowAmount, userCollateral]);
 
   useEffect(() => {
     fetchUserData();
-  }, [
-    isConnected, 
-    userCollateral
-  ]);
+  }, [isConnected, userCollateral, fetchUserData]);
 
   // Calculate the displayed collateral value for the "Your Deposited Collateral" section
   const calculateDepositedCollateralValue = () => {

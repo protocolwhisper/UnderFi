@@ -13,7 +13,7 @@ export default function Hero() {
       </div>
 
       <h1 className="text-4xl md:text-5xl lg:text-7xl font-semibold mt-6 md:mt-8 mb-4 md:mb-6 tracking-tight">
-        Unlock Overcollateralized{" "}
+        Unlock Undercollateralized{" "}
         <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary via-primary to-primary/60">
           Lending
         </span>
